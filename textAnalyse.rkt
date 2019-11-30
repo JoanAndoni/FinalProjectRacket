@@ -4,29 +4,32 @@
     Enrique Badillo
     A0
 
-    Program analyses the exported chats from whats app and facebook in format .txt and
+    Program analyze the exported chats from whats app and facebook in format .txt and
     returns the percentage of used words that you could get tracked.
 |#
 
-(define (appendWords lines)
-    (if (null? (cdr lines))                                             ; IF the next value in the list is empty
-        (append (string-split (car lines)))                             ; TRUE -> Regresar todas las palabras de los array en una lista
-        (append (string-split (car lines)) (appendWords (cdr lines)))   ; FALSE -> Append de los elementos del primer array, con los elementos de los array que siguen  
+(define words2track (list "This" "only" "y"))
+
+(define (contains diccionary word)
+    (cond
+        ((null? diccionary) 0)
+        ((equal? (car diccionary) word) 1)
+        (else (contains (cdr diccionary) word))
     )
 )
 
-(with-input-from-file "WhatsAppChat.txt"                ; Make the read from the following file
-    (lambda ()
-        (let loop (
-            (lines '())                         ; Create the array where the lines are going to be saved
-            (next-line (read-line))             ; Move to the next line
-            )
-            ( if (eof-object? next-line)        ; IF is the end of the file then...
-                (appendWords (reverse lines))   ; Return all the lines
-                (loop (cons next-line lines)    ; ELSE keep reading to the next line
-                    (read-line)
-                )
-            )
-        )
+(define (comparisonOfWords words2compare numberOfWords numberOfAppearances)
+    (cond
+        ((null? words2compare) (list numberOfAppearances numberOfWords (/ numberOfAppearances numberOfWords)))
+        (else (comparisonOfWords (cdr words2compare) (+ numberOfWords 1) (+ numberOfAppearances (contains words2track (car words2compare)))))
     )
 )
+
+(define (appendWords lines finalWords)
+    (cond
+        ((null? lines) (comparisonOfWords finalWords 0 0))
+        (else (appendWords (cdr lines) (append (string-split (car lines)) finalWords)))
+    )
+)
+
+(appendWords (file->lines "WhatsAppChat.txt") '())
