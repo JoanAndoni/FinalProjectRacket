@@ -1,4 +1,12 @@
+#|
+    Joan Andoni Gonźalez Rioz
+    A00569929
+    Enrique Badillo
+    A0
 
+    Program analyses the exported chats from whats app and facebook in format .txt and
+    returns the percentage of used words that you could get tracked.
+|#
 
 (define (appendWords lines)
     (if (null? (cdr lines))                                             ; IF the next value in the list is empty
@@ -7,7 +15,7 @@
     )
 )
 
-(with-input-from-file "test.txt"                ; Make the read from the following file
+(with-input-from-file "WhatsAppChat.txt"                ; Make the read from the following file
     (lambda ()
         (let loop (
             (lines '())                         ; Create the array where the lines are going to be saved
