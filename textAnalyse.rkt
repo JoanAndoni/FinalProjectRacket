@@ -14,7 +14,7 @@
 	(display "This program analyses an exported chat txt file\n Please enter the name fo the file between quotes\n like this:  \"file.txt\"\n ")
 )
 
-(define (bagify lst)
+(define (countOfWords lst)
     (foldl 
         ( lambda 
             (key ht)
@@ -59,7 +59,7 @@
   (printf "That makes ~a% of all the words ~n" (exact->inexact (* ratio 100)))
   (printf "List of words to search is : ~a ~n" (appendWordsInList2track (file->lines "words2track.txt") '()))
   (printf "The most frequent words which apppeared is: ")
-  (bagify listRepeated)
+  (countOfWords listRepeated)
 )
 
 (welcome)
