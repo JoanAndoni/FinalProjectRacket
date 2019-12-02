@@ -8,7 +8,7 @@
     returns the percentage of used words that you could get tracked.
 |#
 
-#lang racket
+; #lang racket
 
 (define (welcome)
 	(display "This program analyses an exported chat txt file\n Please enter the name fo the file between quotes\n like this:  \"file.txt\"\n ")
@@ -24,7 +24,6 @@
 )
 
 (define words2track (file->list "words2track.txt" ))
-
 
 (define (contains diccionary word)
     (cond
@@ -47,12 +46,15 @@
         (else (appendWords (cdr lines) (append (string-split (car lines)) finalWords)))
     )
 )
+
 (define (printResults numberOfApperances numberOfWords ratio)
   (printf "There were ~a words in the chat ~n" numberOfWords)
   (printf "Your selected words  appeared ~a times ~n" numberOfApperances)
   (printf "That makes ~a% of all the words ~n" (exact->inexact (* ratio 100)))
   (printf "List of words to search is : ~a ~n" (file->list "words2track.txt"))
-  (printf "The most frequent words ~a which apppeared ~a times ~n" (most-frequent-element (file->list "words2track.txt") ))
+  (printf "The most frequent words which apppeared is: ")
+  (most-frequent-element (file->list "WhatsAppChat.txt"))
 )
+
 (welcome)
 (appendWords (file->lines (read)) '())
